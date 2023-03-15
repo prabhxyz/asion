@@ -1,6 +1,6 @@
 from astropy.coordinates import SkyCoord, EarthLocation, AltAz, Angle
 from astropy.time import Time
-from variables import ra_dict, dec_dict
+from data.variables import ra_dict, dec_dict
 from geopy.geocoders import Nominatim
 
 # Initialize geolocator

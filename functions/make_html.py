@@ -1,5 +1,4 @@
 import folium
-from sys import exit
 
 def make_html(p1, p2, p3, p4):
     m = folium.Map(location=[0, 0], tiles="Stamen Toner", zoom_start=1)
