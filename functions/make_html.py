@@ -1,14 +1,12 @@
 import folium
 
-def make_html(p1, p2, p3, p4):
-    m = folium.Map(location=[0, 0], tiles="Stamen Toner", zoom_start=1)
-    # Define rectangle coordinates (top-left, bottom-right)
-    upper_left = [p4, p1]
-    lower_right = [p3, p2]
-    rect_coords = [upper_left, lower_right]
-    print(rect_coords)
-    # Create rectangle overlay
-    rect = folium.Rectangle(bounds=rect_coords, fill=True, color='blue', fill_opacity=0.2)
-    rect.add_to(m)
+def make_html(visible_locations):
+    # Create a folium map centered at (0, 0) with zoom level 2
+    m = folium.Map(location=[0 ,0], zoom_start=2)
 
+    # Plot each visible location as a blue circle marker on the map
+    for lat ,lon in visible_locations:
+        folium.CircleMarker(location=[lat ,lon], radius=5, color="blue", fill=True).add_to(m)
+
+    # Show the map in browser
     m.show_in_browser()
