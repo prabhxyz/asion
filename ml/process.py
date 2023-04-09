@@ -1,11 +1,21 @@
 import cv2
 from PIL import Image, ImageFilter
 from data.parameters import blur
+import glob
+import os
 
 def process(threshold, min_area):
-    resize_img = cv2.imread('ml/input/image.jpg')
-    resize_img = cv2.resize(resize_img, (400, 400))
-    cv2.imwrite('ml/input/image.jpg', resize_img)
+    # Use any file type for input image, and then convert it to a .jpg
+    files = glob.glob('ml/input/input.*')
+    for file in files:
+        try:
+            resize_img = cv2.imread(file)
+            resize_img = cv2.resize(resize_img, (400, 400))
+            cv2.imwrite('ml/input/image.jpg', resize_img)
+            os.remove(file)  # delete the file
+            break  # exit the loop if no error
+        except:
+            continue  # try another file if error
 
     # Process image
     image = Image.open("ml/input/image.jpg")
