@@ -2,6 +2,7 @@ import joblib
 import numpy as np
 import ml.process as process
 from data.parameters import *
+from functions.auto_parameters import find_parameters
 
 # Load the saved model
 print("Loading model...")
@@ -9,7 +10,21 @@ model = joblib.load('ml/model/model.sav')
 # The parameters for the process function... (threshold, min_area)
 # A high threshold will remove more colored pixels from the image, and so on.
 # A high min_area will only recognize large groups of white pixels as a star, and so on.
-list1, list2 = process.process(threshold, min_area)
+# Check if parameters are set to auto.
+if threshold == -1 and min_area == -1:
+    print("Finding parameters... (This may take a while)")
+    t, m = find_parameters()
+    list1, list2 = process.process(t, m)
+elif threshold == -1:
+    print("Finding parameters... (This may take a while)")
+    t, m = find_parameters()
+    list1, list2 = process.process(t, min_area)
+elif min_area == -1:
+    print("Finding parameters... (This may take a while)")
+    t, m = find_parameters()
+    list1, list2 = process.process(threshold, m)
+else:
+    list1, list2 = process.process(threshold, min_area)
 final_list = []
 for i in range(len(list1)):
     final_list.append(list1[i])
