@@ -1,18 +1,15 @@
 from astropy.coordinates import SkyCoord, EarthLocation, AltAz, Angle
 from astropy.time import Time
 from data.variables import ra_dict, dec_dict
-from geopy.geocoders import Nominatim
+import geocoder
 
 # Get current location coordinates using geolocator and the device's IP address
 line = int(input("Online: Enter 1\nOffline: Enter 2\nChoice: "))
 if line == 1:
     address = input("Observer Address: ").strip().lower().title()
-    # Initialize geolocator
-    geolocator = Nominatim(user_agent="my_app")
-    location = geolocator.geocode(address)
-    # Observer's location using geopy
-    latitude = location.latitude
-    longitude = location.longitude
+    location = geocoder.arcgis(address).latlng
+    latitude = location[0]
+    longitude = location[1]
 elif line == 2:
     latitude = float(input("Latitude: "))
     longitude = float(input("Longitude: "))

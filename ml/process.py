@@ -1,24 +1,22 @@
 import cv2
 from PIL import Image, ImageFilter
 from data.parameters import blur
-import glob
 import os
 
 def process(threshold, min_area):
-    # Use any file type for input image, and then convert it to a .jpg
-    files = glob.glob('ml/input/input.*')
-    for file in files:
-        try:
-            resize_img = cv2.imread(file)
-            resize_img = cv2.resize(resize_img, (400, 400))
-            cv2.imwrite('ml/input/image.jpg', resize_img)
-            os.remove(file)  # delete the file
-            break  # exit the loop if no error
-        except:
-            continue  # try another file if error
+    # Use any file type for input image, and then convert it to a .png
+    if os.path.isfile("input/input.png"):
+        resize_img = cv2.imread("ml/input/input.png")
+        resize_img = cv2.resize(resize_img, (400, 400))
+        cv2.imwrite('ml/input/image.png', resize_img)
+        os.remove("ml/input/input.png")  # delete the file
+    else:
+        resize_img = cv2.imread("ml/input/image.png")
+        resize_img = cv2.resize(resize_img, (400, 400))
+        cv2.imwrite('ml/input/image.png', resize_img)
 
     # Process image
-    image = Image.open("ml/input/image.jpg")
+    image = Image.open("ml/input/image.png")
     image = image.filter(ImageFilter.BoxBlur(blur))
     def process_image (threshold, image):
         gray_image = image.convert("L")
