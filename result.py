@@ -2,10 +2,12 @@ from tkinter import *
 from PIL import Image, ImageTk
 import customtkinter as ctk
 import ml.process as process
-from data.parameters import *
+
+threshold = 125
+min_area = 25
+blur = 5
 
 def create_window():
-    process.process(threshold, min_area)
     win = ctk.CTk()
     win._set_appearance_mode("dark")
     win.title("Asion - Input Analysis")
@@ -21,6 +23,8 @@ def create_window():
     # load font - Kayak Sans Bold
     ctk.FontManager.load_font("gui/fonts/ksb.otf")
     ks = "Kayak Sans Bold"
+    ctk.FontManager.load_font("gui/fonts/ksr.otf")
+    ksr = "Kayak Sans Regular"
 
     # Images - Input and Processed
     frame = Frame(win, width=400, height=400)
@@ -46,6 +50,64 @@ def create_window():
 
     txt_process = ctk.CTkLabel(win, text="Processing Parameters", font=(ks, 35), text_color="white", bg_color="#2b2c30")
     txt_process.place(relx=0.72, rely=0.58, anchor="e")
+
+    def slider_th(value):
+        global threshold
+        threshold = round(value)
+        txt_th.configure(text="Threshold: {}".format(threshold))
+    def slider_ma(value):
+        global min_area
+        min_area = round(value)
+        txt_ma.configure(text="Minimum Area: {}".format(min_area))
+    def slider_blur(value):
+        global blur
+        blur = round(value)
+        txt_bl.configure(text="Blur: {}".format(blur))
+
+    # Threshold Slider
+    txt_th = ctk.CTkLabel(win, text="Threshold: 125", font=(ksr, 25), text_color="white", bg_color="#2b2c30")
+    txt_th.place(x=330, y=355, anchor="w")
+    slider_1 = ctk.CTkSlider(master=win,command=slider_th, from_=-1, to=250, bg_color="#2b2c30")
+    slider_1.pack(pady=5, padx=5)
+    slider_1.place(relx=0.575, rely=0.75, anchor="e")
+    slider_1.set(125)
+
+    # Min Area Slider
+    txt_ma = ctk.CTkLabel(win, text="Minimum Area: 25", font=(ksr, 25), text_color="white", bg_color="#2b2c30")
+    txt_ma.place(x=610, y=355, anchor="w")
+    slider_2 = ctk.CTkSlider(master=win,command=slider_ma, from_=-1, to=50, bg_color="#2b2c30")
+    slider_2.pack(pady=5, padx=5)
+    slider_2.place(relx=0.875, rely=0.75, anchor="e")
+    slider_2.set(25)
+
+    # Blur Slider
+    txt_bl = ctk.CTkLabel(win, text="Blur: 5", font=(ksr, 25), text_color="white", bg_color="#2b2c30")
+    txt_bl.place(x=335, y=435, anchor="w")
+    slider_1 = ctk.CTkSlider(master=win,command=slider_blur, from_=0, to=10, bg_color="#2b2c30")
+    slider_1.pack(pady=5, padx=5)
+    slider_1.place(relx=0.575, rely=0.9, anchor="e")
+    slider_1.set(5)
+
+    # Process Button
+    img2 = None
+    def button_callback():
+        global img2
+        new_parameters = f"threshold = {threshold}\nmin_area = {min_area}\nblur = {blur}"
+        with open('data/parameters.py', 'w') as f:
+            f.write(new_parameters)
+        win.config(cursor="wait")
+        process.process(threshold, min_area, blur)
+        img2 = ImageTk.PhotoImage(Image.open("ml/input/temp/processed.jpg").resize((300, 300)))
+        label2.configure(image=img2)
+        win.config(cursor="")
+
+    process_btn = ctk.CTkButton(master=win, command=button_callback, bg_color="#2b2c30", height=50, width=150, text="Process", font=(ks, 25), text_color="white", hover_color="green")
+    process_btn.pack(pady=10, padx=10)
+    process_btn.place(x=635, y=450, anchor="w")
+
+    # Reset The Image to Placeholder Image
+    img2 = ImageTk.PhotoImage(Image.open("gui/imgs/placeholder.jpg").resize((300, 300)))
+    label2.configure(image=img2)
 
     win.mainloop()
 

@@ -1,9 +1,8 @@
 import cv2
 from PIL import Image, ImageFilter
-from data.parameters import blur
 import os
 
-def process(threshold, min_area):
+def process(threshold, min_area, blur):
     # Use any file type for input image, and then convert it to a .png
     if os.path.isfile("input/input.png"):
         resize_img = cv2.imread("ml/input/input.png")

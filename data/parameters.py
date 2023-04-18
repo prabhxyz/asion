@@ -1,4 +1,3 @@
-# Constellation Recognition Parameters
-threshold = 150
-min_area = 10
-blur = 1
+threshold = 125
+min_area = 25
+blur = 5

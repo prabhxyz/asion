@@ -3,6 +3,7 @@ import numpy as np
 import ml.process as process
 from data.parameters import *
 from functions.auto_parameters import find_parameters
+from data.parameters import threshold, min_area, blur
 
 # Load the saved model
 print("Loading model...")
@@ -14,17 +15,17 @@ model = joblib.load('ml/model/model.sav')
 if threshold == -1 and min_area == -1:
     print("Finding parameters... (This may take a while)")
     t, m = find_parameters()
-    list1, list2 = process.process(t, m)
+    list1, list2 = process.process(t, m, blur)
 elif threshold == -1:
     print("Finding parameters... (This may take a while)")
     t, m = find_parameters()
-    list1, list2 = process.process(t, min_area)
+    list1, list2 = process.process(t, min_area, blur)
 elif min_area == -1:
     print("Finding parameters... (This may take a while)")
     t, m = find_parameters()
-    list1, list2 = process.process(threshold, m)
+    list1, list2 = process.process(threshold, m, blur)
 else:
-    list1, list2 = process.process(threshold, min_area)
+    list1, list2 = process.process(threshold, min_area, blur)
 final_list = []
 for i in range(len(list1)):
     final_list.append(list1[i])
