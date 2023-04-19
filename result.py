@@ -2,6 +2,7 @@ from tkinter import *
 from PIL import Image, ImageTk
 import customtkinter as ctk
 import ml.process as process
+import constellation_recognition as cr
 
 threshold = 125
 min_area = 25
@@ -20,11 +21,13 @@ def create_window():
     y = int((screen_height - height) / 2)
     win.geometry(f"{width}x{height}+{x}+{y}")
 
-    # load font - Kayak Sans Bold
+    # load fonts
     ctk.FontManager.load_font("gui/fonts/ksb.otf")
     ks = "Kayak Sans Bold"
     ctk.FontManager.load_font("gui/fonts/ksr.otf")
     ksr = "Kayak Sans Regular"
+    ctk.FontManager.load_font("gui/fonts/ksl.otf")
+    ksl = "Kayak Sans Light"
 
     # Images - Input and Processed
     frame = Frame(win, width=400, height=400)
@@ -88,6 +91,11 @@ def create_window():
     slider_1.place(relx=0.575, rely=0.9, anchor="e")
     slider_1.set(5)
 
+    # Constellation Section
+    pre_const = ctk.CTkLabel(win, text="Prediction:", font=(ksr, 25), text_color="white", bg_color="#2b2c30")
+    pre_const.place(x=330, y=88, anchor="w")
+    pre = ctk.CTkLabel(win, text="-/-", font=(ksl, 25), text_color="white", bg_color="#2b2c30")
+    pre.place(x=330, y=120, anchor="w")
     # Process Button
     img2 = None
     def button_callback():
@@ -99,6 +107,8 @@ def create_window():
         process.process(threshold, min_area, blur)
         img2 = ImageTk.PhotoImage(Image.open("ml/input/temp/processed.jpg").resize((300, 300)))
         label2.configure(image=img2)
+        data = cr.predict(threshold, min_area, blur)
+        pre.configure(text=f"{data[0]}: {data[1]}%")
         win.config(cursor="")
 
     process_btn = ctk.CTkButton(master=win, command=button_callback, bg_color="#2b2c30", height=50, width=150, text="Process", font=(ks, 25), text_color="white", hover_color="green")
