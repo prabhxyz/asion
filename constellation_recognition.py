@@ -52,13 +52,15 @@ def predict(threshold, min_area, blur):
     print("Prediction:", prediction[0])
     print("Confidence Score:", (model.predict_proba(X_predict)[0][clnum])*100, "%")
     print("Confidence Scores:")
+    predictions_string = ""
     for conf_scores in np.array(model.predict_proba(X_predict)[0]):
         if conf_scores > 0:
             print(f"\t{next(key for key, value in clnum_dict.items() if value == cur_con)}: {conf_scores*100}%")
+            predictions_string = predictions_string + f"{next(key for key, value in clnum_dict.items() if value == cur_con)}: {conf_scores*100}%, "
         cur_con += 1
     input_dat = [(x, y) for x, y in zip(list1, list2)]
     print("Input Data:", "\n", input_dat, f"({len(input_dat)})")
-    return prediction[0], (model.predict_proba(X_predict)[0][clnum])*100, input_dat
+    return prediction[0], (model.predict_proba(X_predict)[0][clnum])*100, len(input_dat), predictions_string
 
 if __name__ == "__main__":
     predict()

@@ -96,6 +96,17 @@ def create_window():
     pre_const.place(x=330, y=88, anchor="w")
     pre = ctk.CTkLabel(win, text="-/-", font=(ksl, 25), text_color="white", bg_color="#2b2c30")
     pre.place(x=330, y=120, anchor="w")
+
+    st_no = ctk.CTkLabel(win, text="No. of Stars:", font=(ksr, 25), text_color="white", bg_color="#2b2c30")
+    st_no.place(x=630, y=88, anchor="w")
+    st = ctk.CTkLabel(win, text="-/-", font=(ksl, 25), text_color="white", bg_color="#2b2c30")
+    st.place(x=630, y=120, anchor="w")
+
+    pre_const_l = ctk.CTkLabel(win, text="Other Predictions:", font=(ksr, 25), text_color="white", bg_color="#2b2c30")
+    pre_const_l.place(x=330, y=170, anchor="w")
+    other_l = ctk.CTkLabel(win, text="-/-", font=(ksl, 25), text_color="white", bg_color="#2b2c30", wraplength=500)
+    other_l.place(x=330, y=202, anchor="nw")
+
     # Process Button
     img2 = None
     def button_callback():
@@ -109,6 +120,8 @@ def create_window():
         label2.configure(image=img2)
         data = cr.predict(threshold, min_area, blur)
         pre.configure(text=f"{data[0]}: {data[1]}%")
+        other_l.configure(text=f"{data[3]}")
+        st.configure(text=f"{data[2]}")
         win.config(cursor="")
 
     process_btn = ctk.CTkButton(master=win, command=button_callback, bg_color="#2b2c30", height=50, width=150, text="Process", font=(ks, 25), text_color="white", hover_color="green")

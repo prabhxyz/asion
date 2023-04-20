@@ -4,7 +4,7 @@ import os
 
 def process(threshold, min_area, blur):
     # Use any file type for input image, and then convert it to a .png
-    if os.path.isfile("input/input.png"):
+    if os.path.isfile("ml/input/input.png"):
         resize_img = cv2.imread("ml/input/input.png")
         resize_img = cv2.resize(resize_img, (400, 400))
         cv2.imwrite('ml/input/image.png', resize_img)
