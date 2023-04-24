@@ -40,12 +40,16 @@ def open_image():
         convert_to_jpg(filename)
         if True:
             import result
-            window.destroy()
             result.create_window()
+
+def sky_nav():
+    if True:
+        import navigation_ui
+        navigation_ui.create_window()
 
 open_button = ctk.CTkButton(window, text="Open Image", command=open_image, width=200, height=70, font=(ks, 35), text_color="white", hover_color="green", corner_radius=80)
 open_button.place(relx=0.5, rely=0.7, anchor=tk.CENTER)
-continue_btn = ctk.CTkButton(window, text="Continue Without Image", command=open_image, width=100, height=35, font=(ks, 20), text_color="white", hover_color="green", corner_radius=40)
+continue_btn = ctk.CTkButton(window, text="Sky Navigation", command=sky_nav, width=100, height=35, font=(ks, 20), text_color="white", hover_color="green", corner_radius=40)
 continue_btn.place(relx=0.5, rely=0.83, anchor=tk.CENTER)
 
 window.mainloop()

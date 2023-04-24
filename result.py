@@ -19,7 +19,7 @@ def create_window():
     height = int(screen_height * 0.6)
     x = int((screen_width - width) / 2)
     y = int((screen_height - height) / 2)
-    win.geometry(f"{width}x{height}+{x}+{y}")
+    win.geometry(f"{width}x{height}+{x-100}+{y}")
 
     # load fonts
     ctk.FontManager.load_font("gui/fonts/ksb.otf")

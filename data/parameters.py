@@ -1,3 +1,3 @@
-threshold = 119
-min_area = 26
-blur = 2
+threshold = 110
+min_area = 10
+blur = 1
