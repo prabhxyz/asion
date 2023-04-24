@@ -11,7 +11,7 @@ blur = 5
 def create_window():
     win = ctk.CTk()
     win._set_appearance_mode("dark")
-    win.title("Asion - Input Analysis")
+    win.title("Asion - Constellation Recognition")
     win.resizable(False, False)
     screen_width = win.winfo_screenwidth()
     screen_height = win.winfo_screenheight()

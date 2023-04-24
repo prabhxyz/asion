@@ -8,7 +8,7 @@ import threading
 def create_window():
     win = ctk.CTk()
     win._set_appearance_mode("dark")
-    win.title("Asion - Input Analysis")
+    win.title("Asion - Sky Navigation")
     win.resizable(False, False)
     screen_width = win.winfo_screenwidth()
     screen_height = win.winfo_screenheight()
@@ -100,9 +100,19 @@ def create_window():
                 t.start()
         open_btn.configure(state="normal", text="Open Map")
 
+    def clear_alaz():
+        min_al.delete("1.0", "end")
+        max_al.delete("1.0", "end")
+        min_az.delete("1.0", "end")
+        max_az.delete("1.0", "end")
+
     open_btn = ctk.CTkButton(win, text="Open Map", command=open_first, width=100, height=35, font=(ks, 20),
                                  text_color="white", hover_color="green", corner_radius=40, bg_color="#2b2c30")
     open_btn.place(relx=0.5, y=450, anchor="center")
+
+    clear_btn = ctk.CTkButton(win, text="Clear", command=clear_alaz, width=90, height=35, font=(ks, 15),
+                                 text_color="white", hover_color="green", corner_radius=40, bg_color="#2b2c30", fg_color="#c42929")
+    clear_btn.place(relx=0.28, y=450, anchor="center")
 
     win.mainloop()
 
