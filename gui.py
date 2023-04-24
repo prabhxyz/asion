@@ -30,7 +30,7 @@ def convert_to_jpg(file_path):
     with Image.open(file_path) as im:
         im = im.convert("RGB")
         new_file_path = file_path.split(".")[0] + ".jpg"
-        im.save("ml/input/input.png", "PNG", quality=20)
+        im.save("ml/input/image.png", "PNG", quality=20)
     return new_file_path
 
 # create a function to open an image file
@@ -40,6 +40,7 @@ def open_image():
         convert_to_jpg(filename)
         if True:
             import result
+            window.destroy()
             result.create_window()
 
 def sky_nav():
