@@ -1,31 +1,13 @@
 import numpy as np
-import glob
 import cv2
-import os
 from PIL import Image, ImageFilter
 from data.parameters import blur
 import sys
 
 # Duplicate of process() from process.py
 def process(threshold, min_area):
-    if "__main__" == __name__:
-        pre = "../ml/input"
-    else:
-        pre = "ml/input"
-    # Use any file type for input image, and then convert it to a .jpg
-    files = glob.glob(f'{pre}/input.*')
-    for file in files:
-        try:
-            resize_img = cv2.imread(file)
-            resize_img = cv2.resize(resize_img, (400, 400))
-            cv2.imwrite(f'{pre}/image.jpg', resize_img)
-            os.remove(file)  # delete the file
-            break  # exit the loop if no error
-        except:
-            continue  # try another file if error
-
     # Process image
-    image = Image.open(f"{pre}/image.jpg")
+    image = Image.open(f"ml/input/image.png")
     image = image.filter(ImageFilter.BoxBlur(blur))
     def process_image (threshold, image):
         gray_image = image.convert("L")
@@ -39,8 +21,8 @@ def process(threshold, min_area):
 
     # Save processed image.
     processed_image = process_image(threshold, image)
-    processed_image.save(f"{pre}/temp/processed.jpg")
-    img = cv2.imread(f"{pre}/temp/processed.jpg", 0)
+    processed_image.save("ml/input/temp/processed.jpg")
+    img = cv2.imread("ml/input/temp/processed.jpg", 0)
 
     # Find contours in the binary image
     contours, _ = cv2.findContours(img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
